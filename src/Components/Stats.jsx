@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Graph from "./Graph";
+import { toast } from "react-toastify";
+import { auth, db } from "../firebaseConfig";
 
 const Stats = ({
   wpm,
@@ -22,7 +24,70 @@ const Stats = ({
     }
   });
 
-  console.log(graphData,newGraph);
+  const pushToDb = ()=>{
+    const resultRef = db.collection('Results');
+    const {uid} = auth.currentUser;
+    if (isNaN(accuracy)) {
+      toast.error("Invalid Test", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    resultRef.add({ 
+      wpm: wpm,
+      accuracy:accuracy,
+      characters:`${correctChars}/${incorrectChars}/${missedChars}/${extraChars}`,
+      timeStamp: new Date(),
+      userId:uid
+    }).then((res) => {
+      toast.success('Data pushed to db', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }).catch((err) => {
+      toast.error('not able to add data', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    });
+  };
+
+  useEffect(()=>{
+    if(auth.currentUser){
+      pushToDb();
+    }
+    else{
+      toast.warning('login to save result', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+    }
+  },[]);
 
   return (
     <div className="stats-box">

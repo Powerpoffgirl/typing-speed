@@ -37,7 +37,7 @@ const TypingBox = () => {
             return [
               ...currGraphData,
               [
-                testTime - currCountDown,
+                testTime - currCountDown+1,
                 correctChars / 5 / ((testTime - currCountDown + 1) / 60),
               ],
             ];
@@ -136,7 +136,6 @@ const TypingBox = () => {
           } else {
             allChildSpan[currCharIndex - 1].className = "current";
           }
-
           setCurrCharIndex(currCharIndex - 1);
           return;
         }
@@ -144,7 +143,6 @@ const TypingBox = () => {
         allChildSpan[currCharIndex - 1].className = "current";
         setCurrCharIndex(currCharIndex - 1);
       }
-
       return;
     }
 

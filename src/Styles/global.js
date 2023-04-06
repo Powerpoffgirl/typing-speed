@@ -6,9 +6,14 @@ export const GlobalStyles = createGlobalStyle`
 body{
     margin:0;
     padding:0;
-    color:white;
-    background:black;
+    color:${({ theme }) => theme.titleColor};
+    background:${({ theme }) => theme.background};
 }
+
+body:: -webkit-scrollbar{
+    display:none;
+}
+
 .canvas{
     display:grid;
     min-height: 100vh;
@@ -30,6 +35,7 @@ body{
     display:flex;
     flex-wrap:wrap;
     font-size:30px;
+    color:${({ theme }) => theme.typeBoxText}
 }
 
 .word{
@@ -42,7 +48,7 @@ body{
 }
 
 .correct{
-    color:green;
+    color:${({ theme }) => theme.titleColor};
 }
 
 .incorrect{
@@ -109,21 +115,70 @@ body{
 }
 .title{
     font-size: 22px;
+    color: ${({ theme }) => theme.typeBoxText};
 }
 .subtitle{
     font-size: 30px;
-    color: gold;
+    color: ${({ theme }) => theme.titleColor};
 }
 .restart{
     font-size: 40px;
     margin-top: 5px;
     cursor: pointer;
 }
-.header{
+.header, .footer{
     display: flex;
     justify-content: space-between;
     width: 1000px;
     margin-left: auto;
     margin-right: auto;
 }
+
+.screen-center{
+    display:flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 5rem;
+}
+
+.table, user-page-graph{
+    margin:auto;
+    width: 1000px;
+}
+
+.user-info{
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    background: ${({ theme }) => theme.titleColor};
+    min-height: 15rem;
+    color: ${({ theme }) => theme.background};
+    border-radius: 20px;
+}
+.user{
+    width: 50%;
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    border-right: 2px solid;
+}
+.info{
+    width: 60%;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+.picture{
+    width: 40%;
+}
+.total-tests-taken{
+    width: 50%;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 `;
